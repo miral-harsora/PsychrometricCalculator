@@ -27,14 +27,14 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ResultsScreen(mainViewModel: MainViewModel, param: String?, param2: String?, param3: String?) {
-    var results_label = listOf("Saturated Pressure","Vapour Pressure","Absolute Pressure",
+    val results_label = listOf("Saturated Pressure","Vapour Pressure","Absolute Pressure",
         "Wet-Bulb Temperature","Dew-Point Temperature","Specific Humidity","Specific Humidity at Saturation Pressure",
         "Degree of Saturation","Density of Dry Air","Density of Water Vapour",
         "Density of Moist Air","Specific Volume of UnSaturated Air",
         "Specific Volume of Saturated Air","Enthalpy of Vapour",
         "Enthalpy of Liquid","Enthalpy of Evapouration","Enthalpy of Dry Air",
         "Enthalpy of Water Vapour","Enthalpy of Mixture")
-    var results = listOf(mainViewModel.saturatedPressure.collectAsState().value,
+    val results = listOf(mainViewModel.saturatedPressure.collectAsState().value,
         mainViewModel.vapourPressure.collectAsState().value,
         mainViewModel.absolutePressure.collectAsState().value,
         mainViewModel.wetBulbTemperature.collectAsState().value,
