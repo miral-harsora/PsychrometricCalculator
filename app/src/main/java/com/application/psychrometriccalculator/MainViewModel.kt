@@ -4,15 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.application.psychrometriccalculator.Constants.C3
-import com.application.psychrometriccalculator.Constants.C4
-import com.application.psychrometriccalculator.Constants.C5
 import com.application.psychrometriccalculator.model.LocationListItem
 import com.application.psychrometriccalculator.repository.WeatherRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 
 class MainViewModel(private val weatherRepository: WeatherRepository): ViewModel() {
     private var weather = MutableLiveData<LocationListItem>()
