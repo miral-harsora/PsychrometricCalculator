@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ResultsScreen(param: String?, param2: String?, param3: String?) {
+fun ResultsScreen(mainViewModel: MainViewModel, param: String?, param2: String?, param3: String?) {
     var results_label = listOf("Saturated Pressure","Vapour Pressure","Absolute Pressure",
         "Wet-Bulb Temperature","Dew-Point Temperature","Specific Humidity","Specific Humidity at Saturation Pressure",
         "Degree of Saturation","Density of Dry Air","Density of Water Vapour",
@@ -33,6 +34,25 @@ fun ResultsScreen(param: String?, param2: String?, param3: String?) {
         "Specific Volume of Saturated Air","Enthalpy of Vapour",
         "Enthalpy of Liquid","Enthalpy of Evapouration","Enthalpy of Dry Air",
         "Enthalpy of Water Vapour","Enthalpy of Mixture")
+    var results = listOf(mainViewModel.saturatedPressure.collectAsState().value,
+        mainViewModel.vapourPressure.collectAsState().value,
+        mainViewModel.absolutePressure.collectAsState().value,
+        mainViewModel.wetBulbTemperature.collectAsState().value,
+        mainViewModel.dewPointTemperature.collectAsState().value,
+        mainViewModel.specificHumidity.collectAsState().value,
+        mainViewModel.specificHumidityAtSP.collectAsState().value,
+        mainViewModel.degreeOfSaturation.collectAsState().value,
+        mainViewModel.densityOfDryAir.collectAsState().value,
+        mainViewModel.densityOfWaterVapour.collectAsState().value,
+        mainViewModel.densityOfMoistAir.collectAsState().value,
+        mainViewModel.specificVolumeOfUnSaturatedAir.collectAsState().value,
+        mainViewModel.specificVolumeOfSaturatedAir.collectAsState().value,
+        mainViewModel.enthalpyOfVapour.collectAsState().value,
+        mainViewModel.enthalpyOfLiquid.collectAsState().value,
+        mainViewModel.enthalpyOfEvapouration.collectAsState().value,
+        mainViewModel.enthalpyOfDryAir.collectAsState().value,
+        mainViewModel.enthalpyOfWaterVapour.collectAsState().value,
+        mainViewModel.enthalpyOfMixture.collectAsState().value)
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,7 +60,8 @@ fun ResultsScreen(param: String?, param2: String?, param3: String?) {
     ) {
         LazyColumn {
             items(results_label.size) {
-                ResultsItem(results_label.get(index = it),param,param2,param3)
+                ResultsItem(results_label.get(index = it),
+                    results.get(index = it),param2,param3)
             }
         }
     }

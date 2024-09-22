@@ -30,7 +30,7 @@ fun NavigationGraph(navController: NavHostController, mainViewModel: MainViewMod
             val param = it.arguments?.getString("my_param")
             val param2 = it.arguments?.getString("my_param2")
             val param3 = it.arguments?.getString("my_param3")
-            ResultsScreen(param = param, param2 = param2, param3 = param3)
+            ResultsScreen(mainViewModel,param = param, param2 = param2, param3 = param3)
         }
         composable(Routes.Help.route) {
             HelpScreen()

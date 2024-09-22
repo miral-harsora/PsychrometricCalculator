@@ -91,7 +91,7 @@ fun getSearchBar(
                 query = city,
                 onQueryChange = { updatedCity(it) },
                 placeholder = { Text("Search Location", fontSize = 18.sp) },
-                modifier = Modifier.weight(1.25f).height(80.dp).border(1.dp, Color.Black, RoundedCornerShape(32.dp)),
+                modifier = Modifier.weight(1.25f).height(60.dp).border(1.dp, Color.Black, RoundedCornerShape(32.dp)),
                 colors = SearchBarDefaults.colors( containerColor = Color.Transparent,
                     dividerColor = Color.Transparent,
                     inputFieldColors = SearchBarDefaults.inputFieldColors(
@@ -151,8 +151,8 @@ fun InputLayout(
 ) {
     val relativeHumidity by mainViewModel.relativeHumidity.collectAsState("")
     val location by mainViewModel.weatherLiveData.observeAsState()
-    var dryBulbTemperature by remember { mutableStateOf("") }
-    var barometricPressure by remember { mutableStateOf("") }
+    val dryBulbTemperature by mainViewModel.dryBulbTemperature.collectAsState("")
+    val barometricPressure by mainViewModel.barometricPressure.collectAsState("")
 
 
 
@@ -186,7 +186,7 @@ fun InputLayout(
             )
             OutlinedTextField(
                 value = dryBulbTemperature,
-                onValueChange = { dryBulbTemperature = it },
+                onValueChange = {   mainViewModel.updateDryBulbTemperature(it) },
                 shape = RoundedCornerShape(28.dp),
                 label = { Text("Dry Bulb Temperature (°C)", fontSize = 18.sp) },
                 modifier = Modifier
@@ -196,7 +196,7 @@ fun InputLayout(
             )
             OutlinedTextField(
                 value = barometricPressure,
-                onValueChange = { barometricPressure = it },
+                onValueChange = { mainViewModel.updateBarometricPressure(it) },
                 shape = RoundedCornerShape(28.dp),
                 label = { Text("Barometric Pressure (kPa)", fontSize = 18.sp) },
                 modifier = Modifier
@@ -229,6 +229,31 @@ fun InputLayout(
             }
             Button(
                 onClick = {
+                    mainViewModel.calculateSP()
+                    mainViewModel.calculateVapourPressure()
+                    mainViewModel.calculateAbsolutePressure()
+                    mainViewModel.calculateWetBulbTemperature()
+                    mainViewModel.calculateDewPointTemperature()
+                    mainViewModel.calculateSpecificHumidity()
+                    mainViewModel.calculateSpecificHumidityAtSP()
+                    mainViewModel.calculateDegreeOfSaturation()
+                    mainViewModel.calculateDensityOfDryAir()
+                    mainViewModel.calculateDensityOfWaterVapour()
+                    mainViewModel.calculateDensityOfMoistAir()
+                    mainViewModel.calculateSpecificVolumeOfUnSaturatedAir()
+                    mainViewModel.calculateSpecificVolumeOfSaturatedAir()
+                    mainViewModel.calculateEnthalpyOfVapour()
+                    mainViewModel.calculateEnthalpyOfLiquid()
+                    mainViewModel.calculateEnthalpyOfEvapouration()
+                    mainViewModel.calculateEnthalpyOfDryAir()
+                    mainViewModel.calculateEnthalpyOfWaterVapour()
+                    mainViewModel.calculateEnthalpyOfMixture()
+
+
+
+
+
+
                     navController.navigate(BottomNavigationItems.screen2.route+"/$relativeHumidity/$dryBulbTemperature/$barometricPressure")
                           }, modifier = Modifier
                     .height(90.dp)
@@ -249,8 +274,8 @@ fun InputLayout(
         location?.let {
             // Update local state variables when location changes
             mainViewModel.updateRelativeHumidity(it.current.humidity.toString())
-            dryBulbTemperature = (it.current.temp_c.toDouble()).toString()
-            barometricPressure = (it.current.pressure_mb.toDouble() / 10).toString()
+            mainViewModel.updateDryBulbTemperature(it.current.temp_c.toString())
+            mainViewModel.updateBarometricPressure((it.current.pressure_mb / 10).toString())
             search.value=false
         }
     }
