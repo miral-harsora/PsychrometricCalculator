@@ -7,4 +7,5 @@ object Constants {
     const val C4 = 4.18E-05
     const val C5 = -1.45E-08
     const val C6 = 6.55E+00
+    fun Double.round(decimals: Int = 2): Double = "%.${decimals}f".format(this).toDouble()
 }
